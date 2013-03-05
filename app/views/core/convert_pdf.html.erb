@@ -1,0 +1,1 @@
+<%= @res.body.to_s.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'}).html_safe %>

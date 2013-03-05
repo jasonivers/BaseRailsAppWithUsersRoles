@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title><%= full_title(yield(:title)) %></title>
+      <%= stylesheet_link_tag    "application", media: "all" %>
+      <%= javascript_include_tag "application" %>
+      <%= csrf_meta_tags %>
+      <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+  </head>
+  <body>
+      <header class="navbar navbar-fixed-top navbar-inverse">
+          <div class="navbar-inner">
+              <div class="container">
+		<% if current_user.blank? %>
+			<%= link_to full_title(yield(:title)), '/', id: "logo" %>
+		<% else %>
+			<%= link_to full_title(yield(:title)), '/home', id: "logo" %>
+			<form action='/environments' method='GET' class='search_box'>
+				<%
+					@search_value = 'Search'
+					if(not params[:q].blank?)
+						@search_value = params[:q]
+					end
+				%>
+				<input name='q' value='<%= @search_value %>' onFocus='if(this.value == "Search") this.value="";'>
+			  </form>
+		<% end %>
+                  <nav>
+                      <ul class="nav pull-right">
+			  <% if current_user.blank? %>
+                          <li><%= link_to "Sign In", '/users/sign_in' %></li>
+			  <% else %>
+                          <li><%= link_to "Home", '/home' %></li>
+			<% if current_user.role? "Admin" %>
+                          <li><%= link_to "Admin", '/admin' %></li>
+			<% end %>
+                          <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
+			  <% end %>
+                      </ul>
+                  </nav>
+              </div>
+          </div>
+      </header>
+      <div class="container">
+	<%
+		if(not flash[:notice].blank?)
+	%>
+		<br><br><div class='alert alert-block alert-success'><button type='button' class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div><br><br>
+	<% end %>
+	<%
+		if(not flash[:warning].blank?)
+	%>
+		<br><br><div class='alert alert-block alert-success'><button type='button' class="close" data-dismiss="alert">&times;</button><%= flash[:warning] %></div><br><br>
+	<% end %>
+          <%= yield %>
+      </div>
+  </body>
+</html>

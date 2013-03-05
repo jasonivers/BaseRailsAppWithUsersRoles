@@ -1,0 +1,26 @@
+<h1>Listing Users</h1>
+
+<table border=1 class='data_table four_col'>
+  <tr class='header_row'>
+    <th>Email</th>
+    <th>Roles</th>
+    <th>Last Sign In</th>
+    <th>Actions</th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= link_to user.email, user %></td>
+    <td><%= user.roles.collect {|role| role.name}.join(", ") %></td>
+    <td><%= user.last_sign_in_at %></td>
+    <td><%= link_to 'Edit', edit_user_path(user), :class => 'action_link' %>
+    <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure you want to delete ' + user.email + '?' }, :class => 'action_link' %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<div class='page_actions'>
+	<%= link_to 'New User', '/users/new', :class => 'action_link' %>
+</div>

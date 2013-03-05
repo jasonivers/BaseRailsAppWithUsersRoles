@@ -1,0 +1,28 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<br><br>
+<table>
+	<tr class='form_row'><td class='form_label'>Email</td><td><%= f.text_field :email %></td></tr>
+	<tr class='form_row'><td class='form_label'>Password</td><td><%= f.password_field :password %></td></tr>
+	<tr class='form_row'><td class='form_label'>Confirm Password</td><td><%= f.password_field :password_confirmation %></td></tr>
+	<tr class='form_row'><td class='form_label'>Roles</td><td>
+		<table>
+		<% Role.all.each do |role| %>
+			<%= hidden_field_tag "user[role_ids][]" %>
+			<tr class='form_row'><td class='form_label'><%= role.name %></td><td><%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role), :id => "user_role_ids_#{role.id}" %></td></tr>
+		<% end %>
+		</table>
+	</td></tr>
+	<tr class='submit_row'><td colspan=2><%= f.submit %></td></tr>
+</table>
+<% end %>

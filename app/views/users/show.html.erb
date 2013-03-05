@@ -1,0 +1,20 @@
+<br><br>
+
+<table>
+	<tr>
+		<td class='show_label'>Email:</td><td class='show_value'><%= @user.email %></td>
+	</tr>
+	<tr>
+		<td class='show_label'>Roles:</td><td class='show_value'><%= @user.roles.collect {|role| role.name}.join(", ") %></td>
+	</tr>
+	<tr>
+		<td class='show_label'>Last Sign In:</td><td class='show_value'><%= @user.last_sign_in_at %></td>
+	</tr>
+</table>
+
+<br><br>
+
+<div class='page_actions'>
+	<%= link_to 'Edit', edit_user_path(@user), :class => 'action_link' %>
+	<%= link_to 'All Users', users_path, :class => 'action_link' %>
+</div>

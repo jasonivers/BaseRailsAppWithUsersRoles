@@ -1,0 +1,5 @@
+development:        
+        bin_path: "/usr/bin/"
+        searchd_binary_name: "searchd"
+        indexer_binary_name: "indexer"
+        port: 9399
